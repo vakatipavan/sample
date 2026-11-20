@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singara Chennai | Official Tourism Demo</title>
+  <meta name="description" content="Discover Chennai - The cultural capital of South India. Iconic beaches, ancient Dravidian temples, classical music, and world-famous filter coffee.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D97706',
+              saffron: '#F59E0B',
+              bronze: '#B45309',
+              navy: '#0B132B',
+              ocean: '#0284C7',
+              sand: '#FFFBEB',
+              terracotta: '#C2410C',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d97706;
+      border-radius: 4px;
+    }
+    .hero-gradient {
+      background: linear-gradient(180deg, rgba(11, 19, 43, 0.45) 0%, rgba(11, 19, 43, 0.95) 100%);
+    }
+    .temple-pattern {
+      background-color: #0b132b;
+      background-image: radial-gradient(#f59e0b 0.75px, transparent 0.75px), radial-gradient(#f59e0b 0.75px, #0b132b 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      background-opacity: 0.05;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-white">
+
+  <!-- TOP NOTICE BAR -->
+  <aside aria-label="Announcement" class="bg-gradient-to-r from-amber-700 via-amber-600 to-orange-600 text-amber-50 text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 font-medium">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center bg-amber-950/40 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Now Happening</span>
+        <span>✨ Margazhi Music & Dance Festival Season Bookings Open!</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <span class="flex items-center gap-1.5"><i data-lucide="cloud-sun" class="w-3.5 h-3.5"></i> Chennai: 30°C • Breezy Coast</span>
+        <span class="hidden sm:inline">|</span>
+        <a href="#itineraries" class="underline hover:text-white transition">Get 1-Day Pass</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+          <i data-lucide="landmark" class="w-6 h-6 text-slate-950"></i>
+        </div>
+        <div>
+          <span class="block text-xl font-bold tracking-tight text-white font-serif">Singara <span class="text-amber-400">Chennai</span></span>
+          <span class="block text-[10px] tracking-widest text-slate-400 uppercase font-semibold">Tamil Nadu Tourism Demo</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#attractions" class="hover:text-amber-400 transition">Attractions</a>
+        <a href="#experience" class="hover:text-amber-400 transition">Culture & Food</a>
+        <a href="#itineraries" class="hover:text-amber-400 transition">Curated Trips</a>
+        <a href="#guide" class="hover:text-amber-400 transition">Travel Guide</a>
+        <a href="#tamil-phrasebook" class="hover:text-amber-400 transition">Local Lingo</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="hidden lg:flex items-center gap-3">
+        <!-- Audio Ambiance Button -->
+        <button id="soundToggleBtn" onclick="toggleChennaiSound()" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-amber-300 hover:border-amber-500 transition shadow-sm">
+          <i id="soundIcon" data-lucide="volume-2" class="w-4 h-4"></i>
+          <span id="soundLabel">Sounds of Marina</span>
+        </button>
+
+        <button onclick="openBookingModal('General Tour Inquiry')" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-semibold px-4 py-2 rounded-lg text-sm shadow-md shadow-amber-500/20 transition active:scale-95 flex items-center gap-2">
+          <i data-lucide="compass" class="w-4 h-4"></i>
+          Plan My Trip
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-6 bg-slate-900 border-b border-slate-800 space-y-3">
+      <a href="#attractions" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Attractions</a>
+      <a href="#experience" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Culture & Food</a>
+      <a href="#itineraries" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Curated Trips</a>
+      <a href="#guide" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Travel Guide</a>
+      <a href="#tamil-phrasebook" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Local Lingo</a>
+      <button onclick="openBookingModal('Mobile Menu'); toggleMobileMenu()" class="w-full mt-2 bg-amber-500 text-slate-950 font-bold py-2.5 rounded-lg text-sm">
+        Plan My Visit Now
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
+    <!-- Hero Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2000&q=80" alt="Kapaleeshwarar Temple Gopuram, Chennai" class="w-full h-full object-cover object-center scale-105 animate-pulse duration-1000">
+      <div class="absolute inset-0 hero-gradient"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8 pb-16">
+      
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-amber-500/40 text-amber-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        Gateway to South India • 385+ Years of Heritage
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-extrabold text-white tracking-tight leading-[1.1] mb-6">
+        Where Ancient Soul Meets <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-amber-400 via-orange-300 to-amber-200 bg-clip-text text-transparent italic">
+          Coastal Vibrance
+        </span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 mb-10 leading-relaxed font-light">
+        Walk the golden sands of Marina Beach, feel the divine grandeur of thousand-year Dravidian gopurams, sip authentic Kumbakonam degree filter coffee, and immerse in the rhythm of Madras.
+      </p>
+
+      <!-- Search & Filter Quick Bar -->
+      <div class="max-w-3xl mx-auto bg-slate-900/90 backdrop-blur-md p-2.5 sm:p-3 rounded-2xl border border-slate-700/80 shadow-2xl flex flex-col sm:flex-row gap-2.5 items-center mb-8">
+        <div class="flex items-center gap-2 px-3 flex-1 w-full text-slate-400">
+          <i data-lucide="search" class="w-5 h-5 text-amber-400"></i>
+          <input type="text" id="quickSearchInput" onkeyup="handleQuickSearch(event)" placeholder="Search 'Marina Beach', 'Mylapore', 'Filter Coffee'..." class="bg-transparent border-none outline-none text-white text-sm w-full placeholder-slate-400">
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <select id="heroCategorySelect" onchange="filterFromHero(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs sm:text-sm rounded-xl px-3 py-2.5 outline-none focus:border-amber-400 w-full sm:w-auto">
+            <option value="all">All Experiences</option>
+            <option value="temples">Temples & Heritage</option>
+            <option value="beaches">Beaches & Coast</option>
+            <option value="food">Culinary & Cafes</option>
+            <option value="culture">Art & Classical Music</option>
+          </select>
+          <a href="#attractions" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition shrink-0">
+            Explore
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-left">
+        <div class="bg-slate-900/60 backdrop-blur border border-slate-800/80 p-3.5 rounded-xl">
+          <div class="text-2xl font-bold text-amber-400 font-serif">13 km</div>
+          <div class="text-xs text-slate-400">World's 2nd Longest Urban Beach</div>
+        </div>
+        <div class="bg-slate-900/60 backdrop-blur border border-slate-800/80 p-3.5 rounded-xl">
+          <div class="text-2xl font-bold text-amber-400 font-serif">7th C.</div>
+          <div class="text-xs text-slate-400">Pallava & Chola Architecture</div>
+        </div>
+        <div class="bg-slate-900/60 backdrop-blur border border-slate-800/80 p-3.5 rounded-xl">
+          <div class="text-2xl font-bold text-amber-400 font-serif">#1</div>
+          <div class="text-xs text-slate-400">Cultural Capital of South India</div>
+        </div>
+        <div class="bg-slate-900/60 backdrop-blur border border-slate-800/80 p-3.5 rounded-xl">
+          <div class="text-2xl font-bold text-amber-400 font-serif">3000+</div>
+          <div class="text-xs text-slate-400">Live Margazhi Concerts Annually</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CATEGORY FILTER / ATTRACTIONS SECTION -->
+  <section id="attractions" class="py-20 bg-slate-900/60 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <div class="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4"></i> Iconic Landmarks
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Top Attractions in Chennai</h2>
+          <p class="text-slate-400 mt-2 text-sm sm:text-base max-w-xl">
+            From the roaring tides of the Bay of Bengal to the sacred chanting in historic Mylapore, choose your vibe.
+          </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="setFilter('all')" class="filter-btn active-filter px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-amber-500 text-slate-950" data-category="all">All</button>
+          <button onclick="setFilter('temples')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="temples">Temples & Faith</button>
+          <button onclick="setFilter('beaches')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="beaches">Beaches & Coast</button>
+          <button onclick="setFilter('heritage')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="heritage">Colonial & Arts</button>
+          <button onclick="setFilter('food')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="food">Food & Bazaars</button>
+        </div>
+      </div>
+
+      <!-- Attraction Cards Grid -->
+      <div id="attractionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered via JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT: TASTE OF CHENNAI (FOOD TRAIL) -->
+  <section id="experience" class="py-20 bg-slate-950 relative border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-wider inline-flex items-center gap-1.5">
+          <i data-lucide="coffee" class="w-4 h-4"></i> Madras Gastronomy
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">A Feast for the Soul: Taste of Chennai</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          No trip to Chennai is complete without scalding hot filter kaapi, fluffy idlis dipped in spicy sambar, and fresh beachside sundal.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Food Card 1 -->
+        <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition duration-300 flex flex-col">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Madras Filter Coffee" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-400">Must Try</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition">Authentic Degree Filter Kaapi</h3>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Brewed with chicory and dark roast peaberry beans, frothed in traditional stainless steel dabarah and davarah sets.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> Mylapore & T.Nagar</span>
+              <span class="font-semibold text-amber-300">₹25 - ₹50</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Food Card 2 -->
+        <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition duration-300 flex flex-col">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80" alt="Crispy Ghee Roast Dosa" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-400">Iconic</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition">Ghee Roast Dosa & Chutneys</h3>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Golden crepe crisped with fragrant pure desi ghee, served with three types of coconut chutneys and piping hot drumstick sambar.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> Saravana Bhavan / Murugan</span>
+              <span class="font-semibold text-amber-300">₹90 - ₹180</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Food Card 3 -->
+        <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition duration-300 flex flex-col">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80" alt="Marina Beach Street Food" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-400">Street Vibe</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition">Marina Sundal & Fried Fish</h3>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Tempered boiled chickpeas with grated raw mango and coconut shreds, paired with spicy freshly battered coastal fried fish.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> Marina Stalls</span>
+              <span class="font-semibold text-amber-300">₹30 - ₹120</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Food Card 4 -->
+        <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition duration-300 flex flex-col">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80" alt="Mylapore Rose Milk" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-bold text-amber-400">Legendary</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition">Kalathi Rose Milk & Bhajjis</h3>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                A 1927 heritage news mart serving Chennai’s most revered rose milk recipe, alongside hot plantain and mirchi bhajjis.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> Mylapore Tank</span>
+              <span class="font-semibold text-amber-300">₹20 - ₹60</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ITINERARIES / CURATED TRIPS -->
+  <section id="itineraries" class="py-20 bg-slate-900/40 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-wider inline-flex items-center gap-1.5">
+          <i data-lucide="calendar" class="w-4 h-4"></i> Effortless Planning
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">Curated Itineraries for Every Traveler</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-2">
+          Whether you only have 24 hours on a transit or an entire long weekend, follow these expert-crafted plans.
+        </p>
+
+        <!-- Itinerary Tab Buttons -->
+        <div class="inline-flex p-1.5 bg-slate-800/80 rounded-2xl mt-8 border border-slate-700/60">
+          <button onclick="switchItinerary('1day')" id="tab-1day" class="itinerary-tab active-tab px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-amber-500 text-slate-950">
+            ⚡ 1-Day Express Tour
+          </button>
+          <button onclick="switchItinerary('3day')" id="tab-3day" class="itinerary-tab px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition text-slate-300 hover:text-white">
+            🌊 3-Day Heritage & Coastal
+          </button>
+          <button onclick="switchItinerary('culture')" id="tab-culture" class="itinerary-tab px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition text-slate-300 hover:text-white">
+            🎭 Music & Art Special
+          </button>
+        </div>
+      </div>
+
+      <!-- Itinerary Detail Container -->
+      <div id="itineraryContainer" class="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRACTICAL TRAVEL GUIDE & TAMIL PHRASEBOOK -->
+  <section id="guide" class="py-20 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        
+        <!-- Travel Tips & Transportation -->
+        <div>
+          <span class="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-wider inline-flex items-center gap-1.5">
+            <i data-lucide="info" class="w-4 h-4"></i> Insider Handbook
+          </span>
+          <h2 class="text-3xl font-serif font-bold text-white mt-2 mb-6">Navigating Chennai Like a Local</h2>
+          
+          <div class="space-y-4">
+            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl flex items-start gap-4">
+              <div class="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 shrink-0">
+                <i data-lucide="train" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Chennai Metro (CMRL)</h4>
+                <p class="text-xs text-slate-400 mt-1">
+                  Air-conditioned, ultra-clean, connects Airport directly to Central Railway Station, Kilpauk, and Anna Nagar. Use WhatsApp ticketing for 20% discount.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl flex items-start gap-4">
+              <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 shrink-0">
+                <i data-lucide="sun" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Best Weather Season</h4>
+                <p class="text-xs text-slate-400 mt-1">
+                  November to February is breezy and pleasant (23°C to 29°C). The annual Margazhi Music season runs mid-December through mid-January.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl flex items-start gap-4">
+              <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 shrink-0">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Temple Etiquette</h4>
+                <p class="text-xs text-slate-400 mt-1">
+                  Modest attire recommended. Footwear must be deposited at temple counters (nominal ₹2-₹5 tip). Photography is generally permitted in open corridors but prohibited inside sanctums.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl flex items-start gap-4">
+              <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 shrink-0">
+                <i data-lucide="car" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Auto Rickshaws & Rideshare</h4>
+                <p class="text-xs text-slate-400 mt-1">
+                  Uber, Ola, and Rapido autos operate with fixed digital fares. For street autos, agree on price before boarding or request meter.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tamil Quick Phrasebook with Audio synthesis -->
+        <div id="tamil-phrasebook" class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-amber-400 text-xs font-semibold uppercase tracking-wider">Language Helper</span>
+              <h3 class="text-xl font-bold font-serif text-white mt-0.5">Essential Tamil for Travelers</h3>
+            </div>
+            <span class="text-xs bg-slate-800 text-amber-300 px-3 py-1 rounded-full border border-slate-700">Click to listen 🔊</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-6">Tap any phrase to hear pronunciation & impress warm Chennai locals!</p>
+
+          <div class="grid grid-cols-1 gap-3">
+            
+            <button onclick="speakTamil('Vanakkam', 'Hello / Greetings')" class="text-left bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-amber-400/50 p-3.5 rounded-xl transition flex items-center justify-between group">
+              <div>
+                <div class="text-sm font-bold text-white group-hover:text-amber-400 transition flex items-center gap-2">
+                  <span>வணக்கம் (Vanakkam)</span>
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 text-amber-400"></i>
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">Meaning: Hello / Welcome / Respectful Greeting</div>
+              </div>
+              <span class="text-[11px] bg-slate-900 px-2 py-1 rounded text-slate-300">Basic</span>
+            </button>
+
+            <button onclick="speakTamil('Nandri', 'Thank you')" class="text-left bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-amber-400/50 p-3.5 rounded-xl transition flex items-center justify-between group">
+              <div>
+                <div class="text-sm font-bold text-white group-hover:text-amber-400 transition flex items-center gap-2">
+                  <span>நன்றி (Nandri)</span>
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 text-amber-400"></i>
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">Meaning: Thank you very much</div>
+              </div>
+              <span class="text-[11px] bg-slate-900 px-2 py-1 rounded text-slate-300">Polite</span>
+            </button>
+
+            <button onclick="speakTamil('Idhu evvalavu?', 'How much is this?')" class="text-left bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-amber-400/50 p-3.5 rounded-xl transition flex items-center justify-between group">
+              <div>
+                <div class="text-sm font-bold text-white group-hover:text-amber-400 transition flex items-center gap-2">
+                  <span>இது எவ்வளவு? (Idhu Evvalavu?)</span>
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 text-amber-400"></i>
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">Meaning: How much does this cost? (Shopping & Auto)</div>
+              </div>
+              <span class="text-[11px] bg-slate-900 px-2 py-1 rounded text-slate-300">Market</span>
+            </button>
+
+            <button onclick="speakTamil('Romba nalla irukku', 'It is very good!')" class="text-left bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-amber-400/50 p-3.5 rounded-xl transition flex items-center justify-between group">
+              <div>
+                <div class="text-sm font-bold text-white group-hover:text-amber-400 transition flex items-center gap-2">
+                  <span>ரொம்ப நல்லா இருக்கு (Romba Nalla Irukku)</span>
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 text-amber-400"></i>
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">Meaning: It is very good / Delicious food!</div>
+              </div>
+              <span class="text-[11px] bg-slate-900 px-2 py-1 rounded text-slate-300">Compliment</span>
+            </button>
+
+            <button onclick="speakTamil('Oru filter coffee kudunga', 'Please give one filter coffee')" class="text-left bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-amber-400/50 p-3.5 rounded-xl transition flex items-center justify-between group">
+              <div>
+                <div class="text-sm font-bold text-white group-hover:text-amber-400 transition flex items-center gap-2">
+                  <span>ஒரு பில்டர் காபி குடுங்க (Oru Filter Kaapi Kudunga)</span>
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 text-amber-400"></i>
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">Meaning: One hot filter coffee please!</div>
+              </div>
+              <span class="text-[11px] bg-slate-900 px-2 py-1 rounded text-slate-300">Cafe</span>
+            </button>
+
+          </div>
+
+          <!-- Toast feedback for audio -->
+          <div id="speechFeedback" class="mt-4 text-center text-xs text-amber-400 font-medium hidden">
+            🔊 Pronouncing phrase...
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA DEMO / BOOKING BANNER -->
+  <section class="py-16 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+      <h2 class="text-3xl sm:text-5xl font-serif font-extrabold text-white tracking-tight">
+        Ready to Experience Chennai's Charm?
+      </h2>
+      <p class="text-amber-100 text-base sm:text-lg max-w-2xl mx-auto mt-4 font-light">
+        Book a certified heritage walk guide, get customized coastal tour passes, or request our free digital visitor kit.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <button onclick="openBookingModal('Heritage Walk Package')" class="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-3.5 rounded-xl text-sm shadow-xl transition active:scale-95 flex items-center gap-2">
+          <i data-lucide="ticket" class="w-4 h-4 text-amber-400"></i>
+          Book Guided Heritage Walk
+        </button>
+        <button onclick="downloadBrochureDemo()" class="bg-white/20 hover:bg-white/30 text-white font-semibold px-6 py-3.5 rounded-xl text-sm backdrop-blur transition flex items-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          Download Visitor Guide (Demo)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-2 text-white font-serif font-bold text-lg mb-3">
+          <i data-lucide="landmark" class="w-5 h-5 text-amber-400"></i>
+          Singara Chennai
+        </div>
+        <p class="text-slate-400 leading-relaxed">
+          Demonstration Tourism Portal crafted to celebrate the vibrant culture, architecture, and flavors of Chennai, Tamil Nadu.
+        </p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Quick Navigation</h4>
+        <ul class="space-y-2">
+          <li><a href="#attractions" class="hover:text-amber-400 transition">Heritage & Temples</a></li>
+          <li><a href="#attractions" class="hover:text-amber-400 transition">Marina & Coastal Drive</a></li>
+          <li><a href="#experience" class="hover:text-amber-400 transition">Culinary Spots</a></li>
+          <li><a href="#itineraries" class="hover:text-amber-400 transition">1-Day & 3-Day Plans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Emergency & Helpline</h4>
+        <ul class="space-y-2 text-slate-400">
+          <li>Tourist Police: <span class="text-white font-medium">1363 (Toll Free)</span></li>
+          <li>Police Control Room: <span class="text-white font-medium">100 / 112</span></li>
+          <li>Medical Emergency: <span class="text-white font-medium">108</span></li>
+          <li>Chennai Metro Info: <span class="text-white font-medium">1860 425 1515</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-3">Demo Controls</h4>
+        <p class="text-slate-400 mb-3">Test and preview interactive states instantly.</p>
+        <button onclick="toggleChennaiSound()" class="w-full bg-slate-900 border border-slate-700 text-amber-300 py-2 rounded-lg text-xs font-medium hover:border-amber-400 transition flex items-center justify-center gap-2">
+          <i data-lucide="music" class="w-3.5 h-3.5"></i> Toggle Coastal Audio
+        </button>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-slate-500">
+      <p>© 2026 Singara Chennai Tourism Demo. Developed for interactive preview.</p>
+      <p class="mt-2 sm:mt-0">Vanakkam! Welcome to Tamil Nadu.</p>
+    </div>
+  </footer>
+
+  <!-- DETAIL MODAL -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-700 max-w-2xl w-full rounded-2xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-10 bg-slate-950/80 hover:bg-slate-950 text-slate-300 hover:text-white p-2 rounded-full border border-slate-700 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div id="modalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING INQUIRY MODAL -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-700 max-w-md w-full rounded-2xl p-6 shadow-2xl relative">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
+        <i data-lucide="compass" class="w-4 h-4"></i> Demo Experience Booking
+      </div>
+      <h3 id="bookingTitle" class="text-xl font-bold font-serif text-white">Plan Your Chennai Trip</h3>
+      <p class="text-xs text-slate-400 mt-1 mb-5">Receive custom tour recommendations and heritage walk passes.</p>
+
+      <form onsubmit="handleBookingSubmit(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name</label>
+          <input type="text" required placeholder="e.g. Arun Kumar" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Email / Phone</label>
+          <input type="text" required placeholder="arun@example.com or +91..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Select Experience Package</label>
+          <select id="packageSelect" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+            <option value="Mylapore Heritage & Temple Walk">Mylapore Heritage & Temple Walk (Morning)</option>
+            <option value="Marina Sunset & Street Food Trail">Marina Sunset & Street Food Trail</option>
+            <option value="Colonial Fort St George & Museum Pass">Colonial Fort St George & Museum Pass</option>
+            <option value="Mahabalipuram Day Trip Excursion">Mahabalipuram Coastal Excursion (Day Trip)</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Travel Date</label>
+            <input type="date" required value="2026-12-15" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Visitors</label>
+            <select class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+              <option>1 Person</option>
+              <option selected>2 People</option>
+              <option>3 - 5 People</option>
+              <option>Family Group (6+)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold py-2.5 rounded-lg text-sm transition shadow-lg shadow-amber-500/20">
+          Confirm Demo Booking
+        </button>
+      </form>
+
+      <!-- Confirmation Toast -->
+      <div id="bookingToast" class="hidden mt-4 p-3 bg-emerald-900/60 border border-emerald-500/50 rounded-lg text-emerald-200 text-xs flex items-center gap-2">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+        <span>Thank you! Your demo itinerary confirmation voucher is generated.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // DATA: ATTRACTIONS
+    const attractions = [
+      {
+        id: 'kapaleeshwarar',
+        title: 'Kapaleeshwarar Temple',
+        category: 'temples',
+        subtitle: 'Mylapore • 7th-Century Dravidian Splendor',
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+        badge: 'Top Sacred Landmark',
+        timings: '5:30 AM – 12:00 PM, 5:00 PM – 9:00 PM',
+        entry: 'Free Entry (Special Darshan ₹20 - ₹50)',
+        metro: 'Thirumayilai MRTS / Mundagakanni Amman Koil',
+        rating: '4.8 (14k+ reviews)',
+        description: 'Dedicated to Lord Shiva and Karpagambal, this iconic 7th-century temple represents the peak of Dravidian gopuram architecture. Surrounded by bustling flower vendors, bronze artisan shops, and traditional flute melodies.',
+        highlights: ['Rainbow-hued Rajagopuram', 'Sacred Temple Water Tank', 'Panguni Uthiram Annual Chariot Festival']
+      },
+      {
+        id: 'marina-beach',
+        title: 'Marina Beach & Lighthouse',
+        category: 'beaches',
+        subtitle: '13 km Coastal Stretch • Bay of Bengal',
+        image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80',
+        badge: 'World Landmark',
+        timings: 'Open 24 hours (Lighthouse 10 AM – 1 PM, 3 PM – 5:30 PM)',
+        entry: 'Beach Free • Lighthouse ₹20',
+        metro: 'Government Estate / Light House MRTS',
+        rating: '4.7 (42k+ reviews)',
+        description: 'The second longest natural urban beach on Earth. Experience colorful kite flyers, pony rides along the waves, freshly roasted corn, hot sundal, and sweeping 360-degree coastal panoramas from the Madras Lighthouse top.',
+        highlights: ['Historic Statue of Labour', 'Madras Lighthouse panoramic lift', 'Bustling evening food promenade']
+      },
+      {
+        id: 'san-thome',
+        title: 'San Thome Basilica',
+        category: 'temples',
+        subtitle: 'Santhome • Neo-Gothic Apostolic Cathedral',
+        image: 'https://images.unsplash.com/photo-1548625361-195fe57876a3?auto=format&fit=crop&w=800&q=80',
+        badge: 'Global Heritage',
+        timings: '6:00 AM – 9:00 PM Daily',
+        entry: 'Free Admission',
+        metro: 'Thirumayilai (2 km)',
+        rating: '4.7 (8.5k+ reviews)',
+        description: 'One of only three basilicas in the world built directly over the tomb of an apostle of Jesus Christ (St. Thomas the Apostle). Featuring pristine white Neo-Gothic spires, antique stained glass, and a crypt museum.',
+        highlights: ['Tomb of St. Thomas', '16th Century Portuguese relics', 'Stained-glass altar artwork']
+      },
+      {
+        id: 'besant-nagar',
+        title: 'Elliot’s Beach (Bessie)',
+        category: 'beaches',
+        subtitle: 'Besant Nagar • Hip Cafes & Coastal Breeze',
+        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+        badge: 'Youth & Cafe Hub',
+        timings: 'Open All Day • Best during 4 PM – 9 PM',
+        entry: 'Free Admission',
+        metro: 'Indira Nagar MRTS / Metro feeder bus',
+        rating: '4.6 (12k+ reviews)',
+        description: 'A cleaner, quieter counterpart to Marina. Home to the landmark Karl Schmidt Memorial, vibrant sea-facing cafes, gelato parlors, and evening walkers.',
+        highlights: ['Karl Schmidt Memorial', 'Beachside artisanal cafes & sea-view eateries', 'Gentle seaside promenade']
+      },
+      {
+        id: 'dakshinachitra',
+        title: 'DakshinaChitra Living Heritage',
+        category: 'heritage',
+        subtitle: 'ECR Coast • Living Museum of 18 Historic Houses',
+        image: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?auto=format&fit=crop&w=800&q=80',
+        badge: 'Cultural Immersion',
+        timings: '10:00 AM – 6:00 PM (Closed Tuesdays)',
+        entry: '₹175 (Indians) / ₹350 (Foreigners)',
+        metro: 'Thiruvanmiyur then coastal ECR cab',
+        rating: '4.8 (9.8k+ reviews)',
+        description: 'An open-air living museum that meticulously reconstructed 18 authentic traditional vernacular houses from Tamil Nadu, Kerala, Karnataka, and Andhra Pradesh, with live folk dancers and silk weavers.',
+        highlights: ['Chettinad Mansion Architecture', 'Live pottery & glass blowing demos', 'Traditional puppet performances']
+      },
+      {
+        id: 'fort-st-george',
+        title: 'Fort St. George & Museum',
+        category: 'heritage',
+        subtitle: 'Rajaji Salai • Madras 1644 Colonial Fortress',
+        image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80',
+        badge: 'Historic Fortress',
+        timings: '9:00 AM – 5:00 PM (Closed Fridays)',
+        entry: '₹25 (Indians) / ₹300 (Foreigners)',
+        metro: 'High Court Metro / Chennai Fort MRTS',
+        rating: '4.5 (6k+ reviews)',
+        description: 'The first English fortress founded in India (1644). Houses St. Mary’s Church (oldest Anglican church east of Suez), Wellesley House, and an opulent museum exhibiting colonial swords, uniforms, and coins.',
+        highlights: ['Oldest British flagstaff in India', 'St. Mary’s Church 1680', 'Colonial gallery & oil paintings']
+      },
+      {
+        id: 't-nagar-market',
+        title: 'T. Nagar & Pondy Bazaar',
+        category: 'food',
+        subtitle: 'Thyagaraya Nagar • India’s Largest Shopping District',
+        image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+        badge: 'Silk & Gold Epicenter',
+        timings: '10:00 AM – 9:30 PM',
+        entry: 'Free Admission',
+        metro: 'Nandanam Metro / T. Nagar Bus Stand',
+        rating: '4.7 (25k+ reviews)',
+        description: 'The beating retail heart of South India! Renowned for Kanchipuram silk sarees (Nalli, Kumaran), dazzling gold jewelers, pedestrian-friendly Pondy Bazaar plaza, and irresistible South Indian street snacks.',
+        highlights: ['Pondy Bazaar Pedestrian Plaza', 'Authentic Kanchipuram silk stores', 'Murukku sandwich street carts']
+      },
+      {
+        id: 'kalakshetra',
+        title: 'Kalakshetra Foundation',
+        category: 'culture',
+        subtitle: 'Thiruvanmiyur • Classical Bharatanatyam Academy',
+        image: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=800&q=80',
+        badge: 'UNESCO Honored Art',
+        timings: '8:30 AM – 11:30 AM (Morning campus tours)',
+        entry: 'Guided heritage walk ₹100',
+        metro: 'Thiruvanmiyur MRTS',
+        rating: '4.8 (3.2k+ reviews)',
+        description: 'Founded in 1936 by legendary dancer Rukmini Devi Arundale. A serene 100-acre green oasis dedicated to preserving classical Bharatanatyam, Carnatic vocal music, and indigenous handloom weaving.',
+        highlights: ['Open-air banyan tree classrooms', 'Crafts village & natural dye looms', 'Live evening Carnatic recitals']
+      }
+    ];
+
+    // ITINERARIES DATA
+    const itineraries = {
+      '1day': {
+        title: 'The "Heart of Madras" 1-Day Express Tour',
+        badge: 'Recommended for Short Stays',
+        duration: '1 Full Day (10 hours)',
+        budget: '₹800 – ₹1,800 per person',
+        steps: [
+          { time: '06:00 AM', title: 'Sunrise at Marina Beach', desc: 'Watch golden sunrise over Bay of Bengal, fresh sea breeze, and fishermen bringing morning catch.' },
+          { time: '08:00 AM', title: 'Traditional Breakfast & Filter Kaapi', desc: 'Fluffy idli, vada, and sizzling ghee roast dosa at Rayar\'s Mess or Saravana Bhavan Mylapore.' },
+          { time: '09:30 AM', title: 'Mylapore Heritage & Kapaleeshwarar Temple', desc: 'Admire the 120-foot multicolored Gopuram, explore the temple tank and flower bazaars.' },
+          { time: '12:30 PM', title: 'San Thome Basilica & Crypt Museum', desc: 'Visit the historic Neo-Gothic church and museum just 1.5 km down the road.' },
+          { time: '02:00 PM', title: 'Chettinad Banana Leaf Feast', desc: 'Enjoy aromatic South Indian vegetarian thali or spicy pepper chicken at Anjappar / Junior Kuppanna.' },
+          { time: '04:30 PM', title: 'Shopping at Pondy Bazaar / T. Nagar', desc: 'Pick up silk fabrics, brass souvenirs, and spices in the pedestrian plaza.' },
+          { time: '07:00 PM', title: 'Sunset at Besant Nagar & Beachside Dinner', desc: 'Chill at Elliot\'s Beach with hot corn and dinner at sea-facing rooftop cafes.' }
+        ]
+      },
+      '3day': {
+        title: 'The 3-Day Coastal & Cultural Odyssey',
+        badge: 'Complete Immersion',
+        duration: '3 Days / 2 Nights',
+        budget: '₹3,500 – ₹8,000 per person',
+        steps: [
+          { time: 'Day 1', title: 'Colonial & Historic Madras', desc: 'Fort St. George, Government Museum in Egmore, San Thome Cathedral, and evening sunset at Marina Beach Lighthouse.' },
+          { time: 'Day 2', title: 'Spiritual Roots & Arts of Mylapore', desc: 'Kapaleeshwarar temple walk, Kalakshetra classical academy visit, silk shopping in T. Nagar, followed by Margazhi music sabha concert.' },
+          { time: 'Day 3', title: 'The Scenic East Coast Road (ECR) to Mahabalipuram', desc: 'Drive down the coastal ECR, stop at DakshinaChitra heritage village, and witness the UNESCO Shore Temple and giant 7th-century rock reliefs at Mahabalipuram.' }
+        ]
+      },
+      'culture': {
+        title: 'Carnatic Music, Temple Architecture & Culinary Trail',
+        badge: 'Art Lover Special',
+        duration: '2 Days',
+        budget: '₹2,000 – ₹4,500 per person',
+        steps: [
+          { time: 'Morning', title: 'Temple Architecture Deep Dive', desc: 'Guided architectural walk of Mylapore & Parthasarathy Temple (8th-century Pallava inscriptions).' },
+          { time: 'Afternoon', title: 'Gastronomy Trail', desc: 'Tasting trail covering filter kaapi brewing workshop, authentic Chettinad spices, and traditional Halwa.' },
+          { time: 'Evening', title: 'The Madras Music Academy Concert', desc: 'Attend world-class Carnatic vocal, violin, and mridangam performances in Alwarpet.' }
+        ]
+      }
+    };
+
+    // RENDER ATTRACTION CARDS
+    function renderAttractions(filter = 'all', searchQuery = '') {
+      const grid = document.getElementById('attractionsGrid');
+      grid.innerHTML = '';
+
+      const filtered = attractions.filter(item => {
+        const matchesCategory = filter === 'all' || item.category === filter;
+        const query = searchQuery.toLowerCase().trim();
+        const matchesSearch = !query || 
+          item.title.toLowerCase().includes(query) || 
+          item.subtitle.toLowerCase().includes(query) || 
+          item.description.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400">
+            <i data-lucide="compass" class="w-10 h-10 mx-auto text-amber-500 mb-2"></i>
+            <p class="text-base text-white font-medium">No attractions found matching "${searchQuery}"</p>
+            <p class="text-xs text-slate-400 mt-1">Try searching for "temple", "beach", "coffee" or reset the category filter.</p>
+            <button onclick="setFilter('all'); document.getElementById('quickSearchInput').value='';" class="mt-4 px-4 py-2 bg-amber-500 text-slate-950 font-bold rounded-lg text-xs">Reset All Filters</button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-1 shadow-lg group flex flex-col";
+        card.innerHTML = `
+          <div class="relative h-56 overflow-hidden">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/20"></div>
+            <span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full shadow-md">
+              ${item.badge}
+            </span>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-slate-200">
+              <span class="flex items-center gap-1 bg-slate-950/70 backdrop-blur px-2 py-0.5 rounded text-[11px] font-semibold text-amber-300">
+                <i data-lucide="star" class="w-3 h-3 fill-amber-300"></i> ${item.rating}
+              </span>
+              <span class="bg-slate-950/70 backdrop-blur px-2 py-0.5 rounded text-[11px] text-slate-300">
+                ${item.category.toUpperCase()}
+              </span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold font-serif text-white group-hover:text-amber-400 transition">${item.title}</h3>
+              <p class="text-xs text-amber-400/90 font-medium mt-0.5">${item.subtitle}</p>
+              <p class="text-xs text-slate-400 mt-3 line-clamp-2 leading-relaxed">${item.description}</p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div class="text-[11px] text-slate-400">
+                <div class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3 text-slate-500"></i> Open today</div>
+              </div>
+              <button onclick="openDetailModal('${item.id}')" class="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 group-hover:translate-x-1 transition">
+                Explore Details <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // FILTER LOGIC
+    let currentFilter = 'all';
+
+    function setFilter(category) {
+      currentFilter = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+          btn.className = "filter-btn active-filter px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-amber-500 text-slate-950";
+        } else {
+          btn.className = "filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700";
+        }
+      });
+      const searchVal = document.getElementById('quickSearchInput') ? document.getElementById('quickSearchInput').value : '';
+      renderAttractions(category, searchVal);
+    }
+
+    function filterFromHero(val) {
+      setFilter(val);
+      const target = document.getElementById('attractions');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function handleQuickSearch(e) {
+      const q = e.target.value;
+      renderAttractions(currentFilter, q);
+    }
+
+    // RENDER ITINERARY TAB
+    function switchItinerary(key) {
+      document.querySelectorAll('.itinerary-tab').forEach(b => {
+        b.className = "itinerary-tab px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition text-slate-300 hover:text-white";
+      });
+      const activeBtn = document.getElementById(`tab-${key}`);
+      if (activeBtn) {
+        activeBtn.className = "itinerary-tab active-tab px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-amber-500 text-slate-950";
+      }
+
+      const plan = itineraries[key];
+      const container = document.getElementById('itineraryContainer');
+      
+      let stepsHtml = plan.steps.map((st, idx) => `
+        <div class="relative pl-8 sm:pl-10 pb-6 border-l-2 border-amber-500/30 last:border-transparent last:pb-0">
+          <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-amber-500 ring-4 ring-slate-900 flex items-center justify-center"></div>
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wide">${st.time}</span>
+            <span class="text-[11px] text-slate-500">Step ${idx + 1}</span>
+          </div>
+          <h4 class="text-base font-bold text-white mt-0.5">${st.title}</h4>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">${st.desc}</p>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
+          <div>
+            <span class="inline-block px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-xs font-bold mb-2">${plan.badge}</span>
+            <h3 class="text-2xl font-bold font-serif text-white">${plan.title}</h3>
+          </div>
+          <div class="flex items-center gap-4 text-xs text-slate-300 bg-slate-800/80 px-4 py-2 rounded-xl shrink-0">
+            <div>
+              <span class="block text-slate-500 text-[10px]">DURATION</span>
+              <span class="font-semibold text-white">${plan.duration}</span>
+            </div>
+            <div class="border-l border-slate-700 pl-3">
+              <span class="block text-slate-500 text-[10px]">EST. BUDGET</span>
+              <span class="font-semibold text-amber-300">${plan.budget}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          ${stepsHtml}
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-slate-400 flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Includes transport guidance & food spots
+          </div>
+          <button onclick="openBookingModal('${plan.title}')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+            Book Guided Version Of This Trip
+          </button>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    // DETAIL MODAL LOGIC
+    function openDetailModal(id) {
+      const item = attractions.find(a => a.id === id);
+      if (!item) return;
+
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <div class="relative h-64 sm:h-72">
+          <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-black/30"></div>
+          <div class="absolute bottom-4 left-6 right-6">
+            <span class="inline-block bg-amber-500 text-slate-950 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md mb-2">${item.badge}</span>
+            <h3 class="text-2xl sm:text-3xl font-bold font-serif text-white">${item.title}</h3>
+            <p class="text-xs sm:text-sm text-amber-300">${item.subtitle}</p>
+          </div>
+        </div>
+        <div class="p-6 space-y-4">
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${item.description}</p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Timings</span>
+              <span class="text-xs font-semibold text-white">${item.timings}</span>
+            </div>
+            <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Entry Fee</span>
+              <span class="text-xs font-semibold text-white">${item.entry}</span>
+            </div>
+            <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60 sm:col-span-2">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Nearest Transit / Metro</span>
+              <span class="text-xs font-semibold text-amber-300">${item.metro}</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-2">Key Highlights</h4>
+            <div class="flex flex-wrap gap-2">
+              ${item.highlights.map(h => `<span class="bg-slate-800 border border-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded-lg">✨ ${h}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+            <button onclick="closeDetailModal()" class="text-xs text-slate-400 hover:text-white">Close Window</button>
+            <button onclick="closeDetailModal(); openBookingModal('${item.title} Tour');" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs transition">
+              Add to Itinerary
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('detailModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // BOOKING MODAL LOGIC
+    function openBookingModal(pkgTitle = 'Chennai Highlights') {
+      document.getElementById('bookingTitle').textContent = `Book: ${pkgTitle}`;
+      const pkgSelect = document.getElementById('packageSelect');
+      if (pkgSelect && pkgTitle !== 'Mobile Menu' && pkgTitle !== 'General Tour Inquiry') {
+        let optExists = false;
+        for (let i = 0; i < pkgSelect.options.length; i++) {
+          if (pkgSelect.options[i].text.includes(pkgTitle)) {
+            pkgSelect.selectedIndex = i;
+            optExists = true;
+            break;
+          }
+        }
+      }
+      document.getElementById('bookingToast').classList.add('hidden');
+      document.getElementById('bookingModal').classList.remove('hidden');
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const toast = document.getElementById('bookingToast');
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        closeBookingModal();
+        alert('✨ Demo Tour Booking confirmed! We have generated your sample itinerary.');
+      }, 1500);
+    }
+
+    // WEB SPEECH API / TAMIL PRONUNCIATION DEMO
+    function speakTamil(phrase, meaning) {
+      const fb = document.getElementById('speechFeedback');
+      fb.textContent = `🔊 Playing: "${phrase}" (${meaning})`;
+      fb.classList.remove('hidden');
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(phrase);
+        // Try Tamil voice if present
+        const voices = window.speechSynthesis.getVoices();
+        const taVoice = voices.find(v => v.lang.includes('ta') || v.lang.includes('Tamil'));
+        if (taVoice) {
+          utterance.voice = taVoice;
+        } else {
+          utterance.lang = 'ta-IN';
+        }
+        utterance.rate = 0.85;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      setTimeout(() => {
+        fb.classList.add('hidden');
+      }, 3500);
+    }
+
+    // AMBIENT "SOUNDS OF CHENNAI" SYNTHESIS (NO BROKEN AUDIO LINKS)
+    let audioCtx = null;
+    let isPlayingSound = false;
+    let oceanGain = null;
+    let bellInterval = null;
+
+    function toggleChennaiSound() {
+      const label = document.getElementById('soundLabel');
+      const icon = document.getElementById('soundIcon');
+
+      if (!isPlayingSound) {
+        startAmbientAudio();
+        isPlayingSound = true;
+        label.textContent = "Mute Waves";
+        label.classList.add('text-amber-400');
+      } else {
+        stopAmbientAudio();
+        isPlayingSound = false;
+        label.textContent = "Sounds of Marina";
+        label.classList.remove('text-amber-400');
+      }
+    }
+
+    function startAmbientAudio() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        // 1. Ocean surf simulation via filtered white noise
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+        oceanGain = audioCtx.createGain();
+        oceanGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+        // Slow swell
+        const lfo = audioCtx.createOscillator();
+        lfo.frequency.setValueAtTime(0.12, audioCtx.currentTime); // one swell every ~8 seconds
+        const lfoGain = audioCtx.createGain();
+        lfoGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        lfo.connect(lfoGain);
+        lfoGain.connect(oceanGain.gain);
+
+        whiteNoise.connect(filter);
+        filter.connect(oceanGain);
+        oceanGain.connect(audioCtx.destination);
+
+        whiteNoise.start();
+        lfo.start();
+
+        // 2. Periodic serene temple bell chime
+        playTempleBell();
+        bellInterval = setInterval(playTempleBell, 9000);
+
+      } catch (err) {
+        console.log("Audio API unavailable", err);
+      }
+    }
+
+    function playTempleBell() {
+      if (!audioCtx || audioCtx.state !== 'running') return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(784, audioCtx.currentTime); // G5 note
+      osc.frequency.exponentialRampToValueAtTime(523.25, audioCtx.currentTime + 2.5); // C5 decay
+
+      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.0);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 3.0);
+    }
+
+    function stopAmbientAudio() {
+      if (audioCtx) {
+        audioCtx.suspend();
+      }
+      if (bellInterval) {
+        clearInterval(bellInterval);
+        bellInterval = null;
+      }
+    }
+
+    function downloadBrochureDemo() {
+      alert("📥 Download Started: 'Chennai_Visitor_Essential_Guide_2026.pdf' (Demo triggered)");
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAttractions('all');
+      switchItinerary('1day');
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
