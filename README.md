@@ -46,3 +46,11 @@ Then visit: [http://localhost:3000](http://localhost:3000)
    - Built with Web Audio API synthesis (gentle binaural ocean surf waves + periodic temple bell chimes) — zero broken links, works completely offline!
 7. **Demo Tour Booking Modal**:
    - Interactive booking form with date picker, package selector, and simulated instant confirmation.
+
+8. **Admin Portal & Live Content Management**:
+   - **Sample Admin Email:** `admin@chennaitourism.gov.in`
+   - **Sample Password:** `admin123`
+   - **1-Click Auto Fill** button inside the login modal.
+   - Edit, delete, or create new attractions directly with full form controls (timings, fees, metro stops, tags).
+   - Inquiries Manager to review and confirm incoming tour bookings.
+   - Local browser persistence (`localStorage`) preserves all changes across reloads.

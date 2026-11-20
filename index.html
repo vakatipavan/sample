@@ -67,6 +67,30 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-white">
 
+  <!-- ADMIN STATUS BAR (Visible when logged in) -->
+  <div id="adminStatusBar" class="hidden bg-gradient-to-r from-slate-900 via-amber-950 to-slate-900 border-b border-amber-500/50 text-amber-200 px-4 py-2 text-xs sticky top-0 z-50 flex flex-wrap items-center justify-between gap-2 shadow-xl">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 bg-amber-500 text-slate-950 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Admin Active
+      </span>
+      <span class="text-xs text-slate-300">Logged in: <strong id="adminUserDisplay" class="text-amber-300 font-mono">admin@chennaitourism.gov.in</strong></span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="openAttractionFormModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1 rounded-lg text-xs flex items-center gap-1 transition">
+        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Attraction
+      </button>
+      <button onclick="openBookingsManagerModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-3 py-1 rounded-lg text-xs flex items-center gap-1 transition">
+        <i data-lucide="inbox" class="w-3.5 h-3.5"></i> Inquiries (<span id="bookingsCountBadge">0</span>)
+      </button>
+      <button onclick="resetAttractionsToDefault()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-lg text-xs transition" title="Restore initial sample data">
+        Reset Data
+      </button>
+      <button onclick="adminLogout()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 px-2.5 py-1 rounded-lg text-xs flex items-center gap-1 transition">
+        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+      </button>
+    </div>
+  </div>
+
   <!-- TOP NOTICE BAR -->
   <aside aria-label="Announcement" class="bg-gradient-to-r from-amber-700 via-amber-600 to-orange-600 text-amber-50 text-xs py-2 px-4">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 font-medium">
@@ -98,32 +122,41 @@
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
         <a href="#attractions" class="hover:text-amber-400 transition">Attractions</a>
         <a href="#experience" class="hover:text-amber-400 transition">Culture & Food</a>
         <a href="#itineraries" class="hover:text-amber-400 transition">Curated Trips</a>
         <a href="#guide" class="hover:text-amber-400 transition">Travel Guide</a>
         <a href="#tamil-phrasebook" class="hover:text-amber-400 transition">Local Lingo</a>
+        <button onclick="handleAdminButtonClick()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5 transition ml-2 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30">
+          <i data-lucide="shield" class="w-3.5 h-3.5"></i> Admin Portal
+        </button>
       </nav>
 
-      <!-- Actions -->
-      <div class="hidden lg:flex items-center gap-3">
-        <!-- Audio Ambiance Button -->
-        <button id="soundToggleBtn" onclick="toggleChennaiSound()" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-amber-300 hover:border-amber-500 transition shadow-sm">
+      <!-- Actions (Always visible Admin button + Desktop extras) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Admin Portal Trigger Button (Visible on ALL screens) -->
+        <button id="navAdminBtn" onclick="handleAdminButtonClick()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold transition">
+          <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+          <span id="navAdminBtnText">Admin Portal</span>
+        </button>
+
+        <!-- Audio Ambiance Button (Desktop/Tablet) -->
+        <button id="soundToggleBtn" onclick="toggleChennaiSound()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-amber-300 hover:border-amber-500 transition shadow-sm">
           <i id="soundIcon" data-lucide="volume-2" class="w-4 h-4"></i>
           <span id="soundLabel">Sounds of Marina</span>
         </button>
 
-        <button onclick="openBookingModal('General Tour Inquiry')" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-semibold px-4 py-2 rounded-lg text-sm shadow-md shadow-amber-500/20 transition active:scale-95 flex items-center gap-2">
+        <button onclick="openBookingModal('General Tour Inquiry')" class="hidden sm:flex bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-semibold px-4 py-2 rounded-lg text-sm shadow-md shadow-amber-500/20 transition active:scale-95 items-center gap-2">
           <i data-lucide="compass" class="w-4 h-4"></i>
           Plan My Trip
         </button>
-      </div>
 
-      <!-- Mobile Menu Button -->
-      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
-        <i data-lucide="menu" class="w-6 h-6"></i>
-      </button>
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white focus:outline-none">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Dropdown -->
@@ -133,11 +166,22 @@
       <a href="#itineraries" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Curated Trips</a>
       <a href="#guide" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Travel Guide</a>
       <a href="#tamil-phrasebook" onclick="toggleMobileMenu()" class="block py-2 text-slate-300 hover:text-amber-400">Local Lingo</a>
+      <button onclick="handleAdminButtonClick(); toggleMobileMenu()" class="w-full text-left py-2 text-amber-400 font-bold flex items-center gap-2">
+        <i data-lucide="shield" class="w-4 h-4"></i> Admin Portal Login
+      </button>
       <button onclick="openBookingModal('Mobile Menu'); toggleMobileMenu()" class="w-full mt-2 bg-amber-500 text-slate-950 font-bold py-2.5 rounded-lg text-sm">
         Plan My Visit Now
       </button>
     </div>
   </header>
+
+  <!-- FLOATING ADMIN ACCESS PILL (Visible on ALL devices at bottom right) -->
+  <div id="floatingAdminPill" class="fixed bottom-6 right-6 z-40">
+    <button onclick="handleAdminButtonClick()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border-2 border-slate-950 transition transform hover:scale-105 active:scale-95 text-xs">
+      <i data-lucide="shield" class="w-4 h-4"></i>
+      <span>Admin Portal</span>
+    </button>
+  </div>
 
   <!-- HERO SECTION -->
   <section class="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
@@ -225,13 +269,17 @@
           </p>
         </div>
 
-        <!-- Filter Buttons -->
-        <div class="flex flex-wrap gap-2">
+        <!-- Filter Buttons & Admin Add Action -->
+        <div class="flex flex-wrap items-center gap-2">
           <button onclick="setFilter('all')" class="filter-btn active-filter px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-amber-500 text-slate-950" data-category="all">All</button>
           <button onclick="setFilter('temples')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="temples">Temples & Faith</button>
           <button onclick="setFilter('beaches')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="beaches">Beaches & Coast</button>
           <button onclick="setFilter('heritage')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="heritage">Colonial & Arts</button>
           <button onclick="setFilter('food')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700" data-category="food">Food & Bazaars</button>
+          
+          <button id="adminAddAttractionBtn" onclick="openAttractionFormModal()" class="hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Landmark
+          </button>
         </div>
       </div>
 
@@ -660,10 +708,193 @@
     </div>
   </div>
 
+  <!-- ADMIN LOGIN MODAL -->
+  <div id="adminLoginModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+    <div class="bg-slate-900 border border-slate-700 max-w-md w-full rounded-2xl p-6 shadow-2xl relative animate-in fade-in zoom-in duration-150">
+      <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2.5 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
+        <div class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+        </div>
+        <span>Tourism Authority Portal</span>
+      </div>
+
+      <h3 class="text-xl font-bold font-serif text-white">Admin Authentication</h3>
+      <p class="text-xs text-slate-400 mt-1 mb-4">Log in to manage attractions, edit content, and review tourist inquiries.</p>
+
+      <!-- Sample Credentials Callout with 1-Click Auto Fill -->
+      <div class="bg-gradient-to-r from-amber-950/50 via-slate-900 to-amber-950/30 border border-amber-500/40 rounded-xl p-3.5 mb-5 shadow-inner">
+        <div class="flex items-center justify-between text-xs font-semibold text-amber-300 mb-2">
+          <span class="flex items-center gap-1.5"><i data-lucide="key" class="w-3.5 h-3.5"></i> Sample Admin Credentials</span>
+          <button type="button" onclick="autoFillAdminLogin()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider transition">
+            Auto Fill
+          </button>
+        </div>
+        <div class="space-y-1 text-xs">
+          <div class="text-slate-300">Email: <span class="font-mono text-amber-300 font-bold select-all">admin@chennaitourism.gov.in</span></div>
+          <div class="text-slate-300">Password: <span class="font-mono text-amber-300 font-bold select-all">admin123</span></div>
+        </div>
+      </div>
+
+      <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Admin Email</label>
+          <input type="email" id="adminEmailInput" required placeholder="admin@chennaitourism.gov.in" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+          <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div id="adminLoginError" class="hidden text-xs text-rose-400 bg-rose-950/50 border border-rose-500/40 p-2.5 rounded-lg flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span>Invalid email or password. Use demo credentials shown above.</span>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold py-2.5 rounded-lg text-sm transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+          <i data-lucide="lock" class="w-4 h-4"></i> Secure Admin Access
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ATTRACTION FORM MODAL (Add & Edit) -->
+  <div id="attractionFormModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-700 max-w-xl w-full rounded-2xl p-6 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAttractionFormModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
+        <i data-lucide="edit-3" class="w-4 h-4"></i>
+        <span id="attractionFormSubtitle">Attraction Management</span>
+      </div>
+      <h3 id="attractionFormTitle" class="text-xl font-bold font-serif text-white">Add New Attraction</h3>
+      <p class="text-xs text-slate-400 mt-1 mb-5">Fill in details to display this landmark in the Chennai Tourism showcase.</p>
+
+      <form onsubmit="handleAttractionFormSubmit(event)" class="space-y-4">
+        <input type="hidden" id="editAttractionId" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Attraction Name *</label>
+            <input type="text" id="attractionName" required placeholder="e.g. Valluvar Kottam" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Category *</label>
+            <select id="attractionCategory" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+              <option value="temples">Temples & Faith</option>
+              <option value="beaches">Beaches & Coast</option>
+              <option value="heritage">Colonial & Arts</option>
+              <option value="food">Food & Bazaars</option>
+              <option value="culture">Art & Classical Music</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Subtitle / Location Tag *</label>
+          <input type="text" id="attractionSubtitle" required placeholder="e.g. Nungambakkam • 133-ft Stone Chariot Monument" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-semibold text-slate-300">Image URL *</label>
+            <span class="text-[10px] text-slate-400">Quick Presets below:</span>
+          </div>
+          <input type="url" id="attractionImage" required placeholder="https://images.unsplash.com/..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          
+          <!-- Image Presets -->
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <button type="button" onclick="setPresetImage('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80')" class="text-[10px] bg-slate-800 border border-slate-700 hover:border-amber-400 px-2 py-0.5 rounded text-slate-300">Temple</button>
+            <button type="button" onclick="setPresetImage('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80')" class="text-[10px] bg-slate-800 border border-slate-700 hover:border-amber-400 px-2 py-0.5 rounded text-slate-300">Beach</button>
+            <button type="button" onclick="setPresetImage('https://images.unsplash.com/photo-1548625361-195fe57876a3?auto=format&fit=crop&w=800&q=80')" class="text-[10px] bg-slate-800 border border-slate-700 hover:border-amber-400 px-2 py-0.5 rounded text-slate-300">Cathedral</button>
+            <button type="button" onclick="setPresetImage('https://images.unsplash.com/photo-1609743522653-52354461eb27?auto=format&fit=crop&w=800&q=80')" class="text-[10px] bg-slate-800 border border-slate-700 hover:border-amber-400 px-2 py-0.5 rounded text-slate-300">Heritage</button>
+            <button type="button" onclick="setPresetImage('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80')" class="text-[10px] bg-slate-800 border border-slate-700 hover:border-amber-400 px-2 py-0.5 rounded text-slate-300">Market</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Badge Tag</label>
+            <input type="text" id="attractionBadge" placeholder="e.g. Architectural Wonder" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Rating Display</label>
+            <input type="text" id="attractionRating" placeholder="e.g. 4.7 (5k+ reviews)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Visiting Hours</label>
+            <input type="text" id="attractionTimings" placeholder="e.g. 8:30 AM – 5:30 PM Daily" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Entry Fee</label>
+            <input type="text" id="attractionEntry" placeholder="e.g. ₹20 (Adults) / Free" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nearest Metro / Transit Station</label>
+          <input type="text" id="attractionMetro" placeholder="e.g. AG-DMS Metro Station (1.2 km)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Key Highlights (comma-separated)</label>
+          <input type="text" id="attractionHighlights" placeholder="e.g. 133-ft Chariot, Giant Auditorium, Tamil Inscriptions" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Description *</label>
+          <textarea id="attractionDescription" required rows="3" placeholder="Write a compelling overview of this landmark for visitors..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeAttractionFormModal()" class="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white">Cancel</button>
+          <button type="submit" id="saveAttractionBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-amber-500/20">
+            Save Landmark
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BOOKINGS & INQUIRIES MANAGER MODAL -->
+  <div id="bookingsManagerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+    <div class="bg-slate-900 border border-slate-700 max-w-3xl w-full rounded-2xl p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
+      <button onclick="closeBookingsManagerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 pr-8">
+        <div>
+          <span class="text-amber-400 text-xs font-bold uppercase tracking-wider">Admin Inbox</span>
+          <h3 class="text-xl font-bold font-serif text-white">Tour Inquiries & Bookings</h3>
+        </div>
+        <button onclick="clearAllBookings()" class="text-xs text-rose-400 hover:text-rose-300 underline">Clear All</button>
+      </div>
+
+      <!-- Bookings List -->
+      <div id="bookingsListContainer" class="flex-1 overflow-y-auto py-4 space-y-3">
+        <!-- Rendered via JavaScript -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400">
+        <span>Stored locally in browser persistence.</span>
+        <button onclick="closeBookingsManagerModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-lg">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    // DATA: ATTRACTIONS
-    const attractions = [
+    // DATA: ATTRACTIONS INITIAL SEED
+    const defaultAttractions = [
       {
         id: 'kapaleeshwarar',
         title: 'Kapaleeshwarar Temple',
@@ -778,6 +1009,56 @@
       }
     ];
 
+    // ATTRACTIONS STATE (LOADED FROM LOCALSTORAGE OR SEED)
+    let attractions = [];
+    try {
+      const stored = localStorage.getItem('chennai_tourism_attractions');
+      if (stored) {
+        attractions = JSON.parse(stored);
+      } else {
+        attractions = JSON.parse(JSON.stringify(defaultAttractions));
+      }
+    } catch (e) {
+      attractions = JSON.parse(JSON.stringify(defaultAttractions));
+    }
+
+    // ADMIN CREDENTIALS CONFIGURATION
+    const ADMIN_CREDENTIALS = {
+      email: 'admin@chennaitourism.gov.in',
+      password: 'admin123'
+    };
+
+    let isAdminLoggedIn = !!localStorage.getItem('chennai_admin_user');
+
+    // BOOKINGS STATE
+    let demoBookings = [
+      {
+        id: 'BK-101',
+        name: 'Suresh Varma',
+        contact: 'suresh@example.com',
+        package: 'Mylapore Heritage & Temple Walk',
+        date: '2026-12-20',
+        visitors: '2 People',
+        status: 'Confirmed'
+      },
+      {
+        id: 'BK-102',
+        name: 'Elena Rostova',
+        contact: '+91 98401 22334',
+        package: 'Marina Sunset & Street Food Trail',
+        date: '2026-12-24',
+        visitors: '3 - 5 People',
+        status: 'Pending'
+      }
+    ];
+
+    try {
+      const storedBookings = localStorage.getItem('chennai_tourism_bookings');
+      if (storedBookings) {
+        demoBookings = JSON.parse(storedBookings);
+      }
+    } catch(e) {}
+
     // ITINERARIES DATA
     const itineraries = {
       '1day': {
@@ -849,14 +1130,30 @@
 
       filtered.forEach(item => {
         const card = document.createElement('div');
-        card.className = "bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-1 shadow-lg group flex flex-col";
+        card.className = "bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-1 shadow-lg group flex flex-col relative";
+        
+        const adminToolsHtml = isAdminLoggedIn ? `
+          <div class="absolute top-3 right-3 z-20 flex items-center gap-1 bg-slate-950/85 backdrop-blur-md px-2 py-1 rounded-xl border border-amber-500/50 shadow-lg">
+            <button onclick="event.stopPropagation(); openAttractionFormModal('${item.id}')" title="Edit this landmark" class="text-[11px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded flex items-center gap-1 transition">
+              <i data-lucide="edit-2" class="w-3 h-3"></i> Edit
+            </button>
+            <button onclick="event.stopPropagation(); deleteAttraction('${item.id}')" title="Delete landmark" class="text-[11px] bg-rose-600/80 hover:bg-rose-600 text-white p-1 rounded transition">
+              <i data-lucide="trash-2" class="w-3 h-3"></i>
+            </button>
+          </div>
+        ` : '';
+
         card.innerHTML = `
           <div class="relative h-56 overflow-hidden">
             <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/20"></div>
-            <span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full shadow-md">
+            
+            <span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full shadow-md z-10">
               ${item.badge}
             </span>
+
+            ${adminToolsHtml}
+
             <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-slate-200">
               <span class="flex items-center gap-1 bg-slate-950/70 backdrop-blur px-2 py-0.5 rounded text-[11px] font-semibold text-amber-300">
                 <i data-lucide="star" class="w-3 h-3 fill-amber-300"></i> ${item.rating}
@@ -876,9 +1173,16 @@
               <div class="text-[11px] text-slate-400">
                 <div class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3 text-slate-500"></i> Open today</div>
               </div>
-              <button onclick="openDetailModal('${item.id}')" class="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 group-hover:translate-x-1 transition">
-                Explore Details <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-              </button>
+              <div class="flex items-center gap-2">
+                ${isAdminLoggedIn ? `
+                  <button onclick="openAttractionFormModal('${item.id}')" class="text-xs font-semibold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 px-2 py-1 rounded-lg transition">
+                    Edit
+                  </button>
+                ` : ''}
+                <button onclick="openDetailModal('${item.id}')" class="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 group-hover:translate-x-1 transition">
+                  Explore <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -1059,12 +1363,328 @@
 
     function handleBookingSubmit(e) {
       e.preventDefault();
+      const form = e.target;
+      const inputs = form.querySelectorAll('input');
+      const name = inputs[0] ? inputs[0].value.trim() : 'Guest Traveler';
+      const contact = inputs[1] ? inputs[1].value.trim() : 'contact@demo.com';
+      const packageTitle = document.getElementById('packageSelect') ? document.getElementById('packageSelect').value : 'Chennai Heritage Walk';
+      const date = inputs[2] ? inputs[2].value : '2026-12-15';
+      const visitorsSelect = form.querySelector('select:last-of-type');
+      const visitors = visitorsSelect ? visitorsSelect.value : '2 People';
+
+      demoBookings.unshift({
+        id: 'BK-' + Date.now().toString().slice(-4),
+        name,
+        contact,
+        package: packageTitle,
+        date,
+        visitors,
+        status: 'Pending'
+      });
+      saveBookingsToStorage();
+
       const toast = document.getElementById('bookingToast');
       toast.classList.remove('hidden');
       setTimeout(() => {
         closeBookingModal();
-        alert('✨ Demo Tour Booking confirmed! We have generated your sample itinerary.');
-      }, 1500);
+        form.reset();
+        alert(`✨ Demo Tour Inquiry submitted for ${name}!\nSaved in local Admin Inquiries.`);
+      }, 1200);
+    }
+
+    // ==========================================
+    // ADMIN PORTAL LOGIC & LOCAL PERSISTENCE
+    // ==========================================
+    function updateAdminUI() {
+      const statusBar = document.getElementById('adminStatusBar');
+      const addBtn = document.getElementById('adminAddAttractionBtn');
+      const navBtnText = document.getElementById('navAdminBtnText');
+      const navBtn = document.getElementById('navAdminBtn');
+      const countBadge = document.getElementById('bookingsCountBadge');
+
+      if (countBadge) countBadge.textContent = demoBookings.length;
+
+      if (isAdminLoggedIn) {
+        if (statusBar) statusBar.classList.remove('hidden');
+        if (addBtn) addBtn.classList.remove('hidden');
+        if (navBtnText) navBtnText.textContent = 'Admin Mode Active';
+        if (navBtn) {
+          navBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-400 bg-amber-500 text-slate-950 font-bold text-xs shadow-md transition";
+        }
+      } else {
+        if (statusBar) statusBar.classList.add('hidden');
+        if (addBtn) addBtn.classList.add('hidden');
+        if (navBtnText) navBtnText.textContent = 'Admin Portal';
+        if (navBtn) {
+          navBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold transition";
+        }
+      }
+    }
+
+    function handleAdminButtonClick() {
+      if (isAdminLoggedIn) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        openAdminLoginModal();
+      }
+    }
+
+    function openAdminLoginModal() {
+      const err = document.getElementById('adminLoginError');
+      if (err) err.classList.add('hidden');
+      document.getElementById('adminLoginModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAdminLoginModal() {
+      document.getElementById('adminLoginModal').classList.add('hidden');
+    }
+
+    function autoFillAdminLogin() {
+      document.getElementById('adminEmailInput').value = ADMIN_CREDENTIALS.email;
+      document.getElementById('adminPasswordInput').value = ADMIN_CREDENTIALS.password;
+    }
+
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmailInput').value.trim();
+      const pass = document.getElementById('adminPasswordInput').value;
+      const errBox = document.getElementById('adminLoginError');
+
+      if (email.toLowerCase() === ADMIN_CREDENTIALS.email && pass === ADMIN_CREDENTIALS.password) {
+        isAdminLoggedIn = true;
+        try {
+          localStorage.setItem('chennai_admin_user', email);
+        } catch(e) {}
+        closeAdminLoginModal();
+        updateAdminUI();
+        renderAttractions(currentFilter);
+        alert('🎉 Welcome Admin! You can now edit landmarks directly, add new spots, and view visitor inquiries.');
+      } else {
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    function adminLogout() {
+      if (confirm('Log out from Tourism Authority Admin Mode?')) {
+        isAdminLoggedIn = false;
+        try {
+          localStorage.removeItem('chennai_admin_user');
+        } catch(e) {}
+        updateAdminUI();
+        renderAttractions(currentFilter);
+      }
+    }
+
+    // ATTRACTIONS FORM (ADD & EDIT)
+    function openAttractionFormModal(editId = null) {
+      if (!isAdminLoggedIn) {
+        openAdminLoginModal();
+        return;
+      }
+      const titleEl = document.getElementById('attractionFormTitle');
+      const subtitleEl = document.getElementById('attractionFormSubtitle');
+      const hiddenId = document.getElementById('editAttractionId');
+      const saveBtn = document.getElementById('saveAttractionBtn');
+
+      if (editId) {
+        const item = attractions.find(a => a.id === editId);
+        if (!item) return;
+        titleEl.textContent = 'Edit: ' + item.title;
+        subtitleEl.textContent = 'Updating Existing Landmark';
+        hiddenId.value = item.id;
+        document.getElementById('attractionName').value = item.title;
+        document.getElementById('attractionCategory').value = item.category;
+        document.getElementById('attractionSubtitle').value = item.subtitle;
+        document.getElementById('attractionImage').value = item.image;
+        document.getElementById('attractionBadge').value = item.badge || 'Must Visit';
+        document.getElementById('attractionRating').value = item.rating || '4.8 (Verified)';
+        document.getElementById('attractionTimings').value = item.timings || '9:00 AM – 6:00 PM';
+        document.getElementById('attractionEntry').value = item.entry || 'Free Admission';
+        document.getElementById('attractionMetro').value = item.metro || 'Chennai Metro';
+        document.getElementById('attractionHighlights').value = (item.highlights || []).join(', ');
+        document.getElementById('attractionDescription').value = item.description || '';
+        saveBtn.textContent = 'Save Changes';
+      } else {
+        titleEl.textContent = 'Add New Landmark';
+        subtitleEl.textContent = 'Creating New Tourism Entry';
+        hiddenId.value = '';
+        document.getElementById('attractionName').value = '';
+        document.getElementById('attractionCategory').value = 'temples';
+        document.getElementById('attractionSubtitle').value = '';
+        document.getElementById('attractionImage').value = 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80';
+        document.getElementById('attractionBadge').value = 'New Landmark';
+        document.getElementById('attractionRating').value = '4.8 (New entry)';
+        document.getElementById('attractionTimings').value = '9:00 AM – 6:00 PM Daily';
+        document.getElementById('attractionEntry').value = 'Free Entry';
+        document.getElementById('attractionMetro').value = 'Chennai Central / Metro';
+        document.getElementById('attractionHighlights').value = 'Scenic views, Heritage architecture, Evening cultural atmosphere';
+        document.getElementById('attractionDescription').value = '';
+        saveBtn.textContent = 'Publish Landmark';
+      }
+
+      document.getElementById('attractionFormModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAttractionFormModal() {
+      document.getElementById('attractionFormModal').classList.add('hidden');
+    }
+
+    function setPresetImage(url) {
+      document.getElementById('attractionImage').value = url;
+    }
+
+    function handleAttractionFormSubmit(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editAttractionId').value;
+      const title = document.getElementById('attractionName').value.trim();
+      const category = document.getElementById('attractionCategory').value;
+      const subtitle = document.getElementById('attractionSubtitle').value.trim();
+      const image = document.getElementById('attractionImage').value.trim();
+      const badge = document.getElementById('attractionBadge').value.trim() || 'Iconic Landmark';
+      const rating = document.getElementById('attractionRating').value.trim() || '4.8 (Verified)';
+      const timings = document.getElementById('attractionTimings').value.trim() || 'Open Daily';
+      const entry = document.getElementById('attractionEntry').value.trim() || 'Free Entry';
+      const metro = document.getElementById('attractionMetro').value.trim() || 'Chennai Central Metro';
+      const description = document.getElementById('attractionDescription').value.trim();
+      const rawHighlights = document.getElementById('attractionHighlights').value;
+      const highlights = rawHighlights.split(',').map(h => h.trim()).filter(h => h.length > 0);
+
+      if (editId) {
+        const idx = attractions.findIndex(a => a.id === editId);
+        if (idx !== -1) {
+          attractions[idx] = {
+            ...attractions[idx],
+            title, category, subtitle, image, badge, rating, timings, entry, metro, description, highlights
+          };
+        }
+      } else {
+        const newId = 'attr-' + Date.now();
+        attractions.unshift({
+          id: newId,
+          title, category, subtitle, image, badge, rating, timings, entry, metro, description, highlights
+        });
+      }
+
+      saveAttractionsToStorage();
+      closeAttractionFormModal();
+      renderAttractions(currentFilter);
+      alert(`🎉 Success! "${title}" is now updated in your local website.`);
+    }
+
+    function deleteAttraction(id) {
+      const item = attractions.find(a => a.id === id);
+      if (!item) return;
+      if (confirm(`Are you sure you want to delete "${item.title}"?`)) {
+        attractions = attractions.filter(a => a.id !== id);
+        saveAttractionsToStorage();
+        renderAttractions(currentFilter);
+      }
+    }
+
+    function resetAttractionsToDefault() {
+      if (confirm('Reset all landmarks to initial default sample data?')) {
+        attractions = JSON.parse(JSON.stringify(defaultAttractions));
+        saveAttractionsToStorage();
+        renderAttractions(currentFilter);
+        alert('🔄 Data restored to original 8 Chennai landmarks.');
+      }
+    }
+
+    function saveAttractionsToStorage() {
+      try {
+        localStorage.setItem('chennai_tourism_attractions', JSON.stringify(attractions));
+      } catch (e) {
+        console.error('Storage error', e);
+      }
+    }
+
+    // BOOKINGS & INQUIRIES MANAGEMENT
+    function openBookingsManagerModal() {
+      renderBookingsList();
+      document.getElementById('bookingsManagerModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeBookingsManagerModal() {
+      document.getElementById('bookingsManagerModal').classList.add('hidden');
+    }
+
+    function renderBookingsList() {
+      const container = document.getElementById('bookingsListContainer');
+      const badge = document.getElementById('bookingsCountBadge');
+      if (badge) badge.textContent = demoBookings.length;
+
+      if (demoBookings.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-slate-400 text-xs">
+            <i data-lucide="inbox" class="w-8 h-8 mx-auto text-slate-600 mb-2"></i>
+            No tour inquiries yet. Submissions from "Plan My Trip" will appear here.
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = demoBookings.map((bk, i) => `
+        <div class="bg-slate-800/80 border border-slate-700/80 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-sm">${bk.name}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${bk.status === 'Confirmed' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+                ${bk.status}
+              </span>
+            </div>
+            <div class="text-amber-300/90 font-medium mt-0.5">${bk.package}</div>
+            <div class="text-slate-400 text-[11px] mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
+              <span>📅 Date: ${bk.date}</span>
+              <span>👥 ${bk.visitors}</span>
+              <span>📞 ${bk.contact}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="toggleBookingStatus(${i})" class="px-3 py-1 rounded-lg text-xs font-semibold ${bk.status === 'Confirmed' ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400'} transition">
+              ${bk.status === 'Confirmed' ? 'Mark Pending' : 'Confirm'}
+            </button>
+            <button onclick="deleteBooking(${i})" class="p-1 text-slate-400 hover:text-rose-400" title="Delete record">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function toggleBookingStatus(idx) {
+      if (demoBookings[idx]) {
+        demoBookings[idx].status = demoBookings[idx].status === 'Confirmed' ? 'Pending' : 'Confirmed';
+        saveBookingsToStorage();
+        renderBookingsList();
+      }
+    }
+
+    function deleteBooking(idx) {
+      demoBookings.splice(idx, 1);
+      saveBookingsToStorage();
+      renderBookingsList();
+    }
+
+    function clearAllBookings() {
+      if (confirm('Clear all visitor inquiries?')) {
+        demoBookings = [];
+        saveBookingsToStorage();
+        renderBookingsList();
+      }
+    }
+
+    function saveBookingsToStorage() {
+      try {
+        localStorage.setItem('chennai_tourism_bookings', JSON.stringify(demoBookings));
+        const badge = document.getElementById('bookingsCountBadge');
+        if (badge) badge.textContent = demoBookings.length;
+      } catch (e) {}
     }
 
     // WEB SPEECH API / TAMIL PRONUNCIATION DEMO
@@ -1203,6 +1823,7 @@
 
     // INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
+      updateAdminUI();
       renderAttractions('all');
       switchItinerary('1day');
       lucide.createIcons();
